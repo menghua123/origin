@@ -85,8 +85,8 @@ export default {
       selection: [],
       loading: false,
       edit: '',
-      selections: [],
-      newDatas: this.setSeen
+      selections: []
+
     }
   },
   computed: {
@@ -94,10 +94,10 @@ export default {
       getDatas: (state) => state.table.tableData
     }),
     setSeen() {
-      var setSeen = this.getDatas.map((item) => {
+      var setSeen
+      return setSeen = this.getDatas.map((item) => {
         return Object.assign({}, item, { seen: false })
       })
-      return setSeen
     }
   },
   created() {
@@ -105,7 +105,7 @@ export default {
     getData().then((res) => {
       var { data } = res
       this.$store.dispatch('table/setData', data)
-      this.datas = this.newDatas
+      this.datas = this.setSeen
       this.loading = false
     }).catch((err) => { console.log(err) })
   },
