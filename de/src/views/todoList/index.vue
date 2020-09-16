@@ -9,14 +9,14 @@
         <div class="doing" style="padding-top:30px">
           <span>正在进行</span>
           <template v-for="item in todos">
-            <toDo :key="item+Date()" :message="item" :togglecheck="toggleCheckFalse" @change="toggle" @click="deleteTask" />
+            <toDo :key="item+Date()" :message="item" :togglecheck="toggleCheckFalse" @change="toggle" @click="DeleteTask" />
           </template>
         </div>
 
         <div class="done">
           <span>已经完成</span>
           <template v-for="item in dones">
-            <toDo :key="item+Date()" :message="item" :togglecheck="toggleCheckTrue" @change="toggle" />
+            <toDo :key="item+Date()" :message="item" :togglecheck="toggleCheckTrue" @change="toggle" @click="deleteTask" />
           </template>
         </div>
       </div>
@@ -55,19 +55,26 @@ export default {
         })
       }
     },
-    deleteTask(val) {
+    DeleteTask(val) {
       this.todos.forEach((item, index) => {
         if (item === val) {
           this.todos.splice(index, 1)
         }
       })
     },
+    deleteTask(val) {
+      this.dones.forEach((item, index) => {
+        if (item === val) {
+          this.dones.splice(index, 1)
+        }
+      })      
+    },
     addTask(event) {
       var value = event.target.value
-      if(value.length>0){
+      if (value.length > 0) {
         this.todos.push(value)
-        event.target.value = ''}
-      else{
+        event.target.value = ''
+      } else {
         this.$message({
           message: '请输入文字!'
         })
