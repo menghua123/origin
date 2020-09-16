@@ -64,8 +64,14 @@ export default {
     },
     addTask(event) {
       var value = event.target.value
-      this.todos.push(value)
-      event.target.value = ''
+      if(value.length>0){
+        this.todos.push(value)
+        event.target.value = ''}
+      else{
+        this.$message({
+          message: '请输入文字!'
+        })
+      }
     }
   }
 }
