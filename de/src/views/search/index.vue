@@ -199,9 +199,14 @@ export default {
       row.seen = true
       this.$nextTick(() => {
         var target = document.querySelectorAll('.edit')
+        target[0].setSelectionRange(0,target[0].value.length)
         target[0].focus()
-      })
-    },
+        /*for(var i=0;i<target.length;i++){          
+          target[i].addEventListener("blur",function(){                       
+            target[i].setSelectionRange(0,target[i].value.length)
+            target[i].focus()*/                       
+        })
+        },    
     handleDelete(index, name) {
       this.$confirm(`此操作将永久删除该文件, 是否继续?`, '提示', {
         confirmButtonText: '确定',
