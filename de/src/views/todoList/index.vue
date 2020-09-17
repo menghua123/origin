@@ -43,14 +43,14 @@ export default {
         this.todos.forEach((item, index) => {
           if (item === value) {
             this.todos.splice(index, 1)
-            this.dones.push(item)
+            this.dones.unshift(item)
           }
         })
       } else {
         this.dones.forEach((item, index) => {
           if (item === value) {
             this.dones.splice(index, 1)
-            this.todos.push(item)
+            this.todos.unshift(item)
           }
         })
       }
@@ -72,7 +72,7 @@ export default {
     addTask(event) {
       var value = event.target.value
       if (value.length > 0) {
-        this.todos.push(value)
+        this.todos.unshift(value)
         event.target.value = ''
       } else {
         this.$message({
