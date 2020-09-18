@@ -1,23 +1,26 @@
 <template>
   <div class="contain">
-    <el-checkbox v-model="checked" class="check" @change="$emit('change',task,checked)" />
-    <input :value="task" :disabled="true" class="input">
-    <span class="el-icon-circle-close" @click="$emit('click',task)" />
+    <el-checkbox v-model="checked" class="check" @change="$emit('change',taskId,checked)" />
+    <input :value="taskValue" :disabled="true" class="input">
+    <span class="el-icon-circle-close" @click="$emit('click',taskId)" />
   </div>
 </template>
 <script>
 export default {
   props: {
     message: {
-      type: [String, Number],
-      default: ''
+      type: Object,
+      default: function(){
+        return {val:'',id:''}
+      }
     },
     togglecheck: Boolean
   },
   data() {
     return {
-      task: this.message,
-      checked: this.togglecheck
+      taskId: this.message.id,
+      checked: this.togglecheck,
+      taskValue:this.message.val
     }
   }
 }

@@ -8,15 +8,16 @@
       <div class="content">
         <div class="doing" style="padding-top:30px">
           <span>正在进行</span>
+          <span class="count1">{{ count1 }}</span>
           <template v-for="item in todos">
-            <toDo :key="item+Date()" :message="item" :togglecheck="toggleCheckFalse" @change="toggle" @click="DeleteTask" />
+            <toDo :key="item.id" :message="item" :togglecheck="toggleCheckFalse" @change="toggle" @click="DeleteTask" />
           </template>
         </div>
 
         <div class="done">
-          <span>已经完成</span>
+          <span class="Span" style="position:relative">已经完成<span class="count2">{{ count2 }}</span></span>        
           <template v-for="item in dones">
-            <toDo :key="item+Date()" :message="item" :togglecheck="toggleCheckTrue" @change="toggle" @click="deleteTask" />
+            <toDo :key="item.id" :message="item" :togglecheck="toggleCheckTrue" @change="toggle" @click="deleteTask" />
           </template>
         </div>
       </div>
@@ -31,6 +32,8 @@ export default {
     return {
       input: '',
       checked: false,
+      count1: 0,
+      count2: 0,
       todos: [],
       dones: [],
       toggleCheckTrue: true,
@@ -38,48 +41,59 @@ export default {
     }
   },
   methods: {
-    toggle(value, checked) {
+    toggle(id, checked) {
       if (checked === true) {
         this.todos.forEach((item, index) => {
-          if (item === value) {
+          if (item.id === id) {
             this.todos.splice(index, 1)
-            this.dones.unshift(item)
+            this.dones.unshift(item) 
+            this.count1--
+            this.count2++        
           }
         })
       } else {
         this.dones.forEach((item, index) => {
-          if (item === value) {
+          if (item.id === id) {
             this.dones.splice(index, 1)
             this.todos.unshift(item)
+            this.count1++
+            this.count2--              
           }
         })
       }
     },
-    DeleteTask(val) {
+    DeleteTask(id) {
       this.todos.forEach((item, index) => {
-        if (item === val) {
+        if (item.id === id) {
           this.todos.splice(index, 1)
+          this.count1--
         }
       })
     },
-    deleteTask(val) {
+    deleteTask(id) {
       this.dones.forEach((item, index) => {
-        if (item === val) {
+        if (item.id === id) {
           this.dones.splice(index, 1)
+          this.count2--
         }
       })      
     },
     addTask(event) {
       var value = event.target.value
       if (value.length > 0) {
-        this.todos.unshift(value)
+        var itemId = this.GenerateID()
+        this.todos.unshift({ val: value, id: itemId })
+        this.count1++
         event.target.value = ''
       } else {
         this.$message({
           message: '请输入文字!'
         })
       }
-    }
+    },
+    GenerateID() {
+      return Number(Math.random().toString().substr(3) + Date.now()).toString(36)
+    } 
   }
 }
 </script>
@@ -112,6 +126,33 @@ span{
   color:black;
   padding-top:30px;
   padding-bottom:30px;
+}
+span.count1{
+  font-size:13px;
+  color:#666;
+  position:absolute;
+  left:840px;
+  top:95px;
+  width:17px;
+  height:17px;
+  border-radius:50%;
+  background:#E6E6FA;
+  padding:0 5px;
+  text-align: center;
+}
+.done span.count2{
+  display:inline-block; 
+  font-size:13px;
+  color:#666;
+  position:absolute;
+  top:46px;
+  left:576px;
+  width:17px;
+  height:17px;
+  border-radius:50%;
+  background:#E6E6FA;
+  padding:0 5px;
+  text-align: center;
 }
 
 </style>
