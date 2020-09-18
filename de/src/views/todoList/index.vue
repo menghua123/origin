@@ -10,14 +10,14 @@
           <span>正在进行</span>
           <span class="count1">{{ count1 }}</span>
           <template v-for="item in todos">
-            <toDo :key="item.id" :message="item" :togglecheck="toggleCheckFalse" @change="toggle" @click="DeleteTask" />
+            <toDo :key="item.id" :message="item" :togglecheck="toggleCheckFalse" @change="toggle" @click="deleteTodoTask" />
           </template>
         </div>
 
         <div class="done">
           <span class="Span" style="position:relative">已经完成<span class="count2">{{ count2 }}</span></span>        
           <template v-for="item in dones">
-            <toDo :key="item.id" :message="item" :togglecheck="toggleCheckTrue" @change="toggle" @click="deleteTask" />
+            <toDo :key="item.id" :message="item" :togglecheck="toggleCheckTrue" @change="toggle" @click="deleteDoneTask" />
           </template>
         </div>
       </div>
@@ -62,7 +62,7 @@ export default {
         })
       }
     },
-    DeleteTask(id) {
+    deleteTodoTask(id) {
       this.todos.forEach((item, index) => {
         if (item.id === id) {
           this.todos.splice(index, 1)
@@ -70,7 +70,7 @@ export default {
         }
       })
     },
-    deleteTask(id) {
+    deleteDoneTask(id) {
       this.dones.forEach((item, index) => {
         if (item.id === id) {
           this.dones.splice(index, 1)
