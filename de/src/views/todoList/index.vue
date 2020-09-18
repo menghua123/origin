@@ -79,12 +79,27 @@ export default {
       })      
     },
     addTask(event) {
-      var value = event.target.value
+      var value = event.target.value.trim()
       if (value.length > 0) {
-        var itemId = this.GenerateID()
-        this.todos.unshift({ val: value, id: itemId })
-        this.count1++
-        event.target.value = ''
+        if(!isNaN(value)){
+          this.$message({
+          message: '不能输入数字!'
+        })
+        }else{
+          var valid = this.todos.some(item => {
+            return item.val === value
+          })
+          if(valid){
+            this.$message({
+            message:'您输入的任务已存在，请重新输入'
+            })
+          }else{
+            var itemId = this.GenerateID()
+            this.todos.unshift({ val: value, id: itemId })
+            this.count1++
+            event.target.value = ''
+          }
+        }        
       } else {
         this.$message({
           message: '请输入文字!'
