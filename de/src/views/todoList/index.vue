@@ -42,8 +42,8 @@ export default {
   },
   created(){
     var list = localStorage.getItem('list')
-    if(list!=null){
-    var list=JSON.parse(list)     
+    if(list != null){
+    var list = JSON.parse(list)     
     this.todos = list.todoList
     this.dones = list.doneList
     this.count1 = list.count1
@@ -102,7 +102,8 @@ export default {
         })
         }else{
           console.log(this.todos)
-          var valid = this.todos.some(item => {
+          var alltask=[...this.todos, ...this.dones]
+          var valid = alltask.some(item => {
             return item.val === value
           })
           if(valid){
@@ -159,7 +160,7 @@ export default {
 }
 
 input{
-  width:500px;
+  width:400px;
   height:30px;
   margin-left:70px;
 }
